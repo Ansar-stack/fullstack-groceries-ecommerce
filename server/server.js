@@ -2,6 +2,7 @@ import express, { urlencoded } from 'express';
 import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import {} from 'dotenv/config'
+import { connectDB } from './src/configs/db.config.js';
 
 
 const app = express();
@@ -14,6 +15,8 @@ app.use(urlencoded({extended: true}));
 
 // Routes
 
+// Connect DB
+connectDB();
 
 // Start Listening Server
 app.listen(process.env.PORT, ()=>console.log(`Server listening at port ${process.env.PORT}`));
