@@ -3,8 +3,8 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser';
 import {} from 'dotenv/config'
 import { connectDB } from './src/configs/db.config.js';
-import { ResponseMiddleware } from './src/middlewares/Response.middleware.js';
-
+import { ResponseMiddleware } from './src/middlewares/response.middleware.js';
+import {ErrorMiddlware} from './src/middlewares/error.middleware.js'
 
 const app = express();
 
@@ -23,3 +23,4 @@ connectDB();
 app.listen(process.env.PORT, ()=>console.log(`Server listening at port ${process.env.PORT}`));
 
 // Error Middlware
+app.use(ErrorMiddlware);
