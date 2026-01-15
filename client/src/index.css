@@ -1,0 +1,7 @@
+@import "tailwindcss";
+*{
+    @apply font-mono
+}
+body{
+    @apply bg-gray-100
+}
