@@ -1,6 +1,8 @@
 import { User } from "../models/user.model.js";
-import { asyncHanlder } from "../utils/asyncHandler.utils.js"
+import { asyncHanlder } from "../utils/asyncHandler.util.js"
 import ErrorHandler from "../utils/errorHanlder.util.js";
+import { generateAccessToken, generateRefreshToken } from "../utils/genToken.util.js";
+import { sentTokenToClient } from "../utils/sentTokenToClient.util.js";
 
 // Handle register 
 export const handleRegister = asyncHanlder(async (req, res, next)=>{
@@ -11,6 +13,14 @@ export const handleRegister = asyncHanlder(async (req, res, next)=>{
     // Register a new user in DB
     const user = await User.create({name, email, password});
     // Generate tokens 
+    const accessToken = generateAccessToken(user.id);
+    const refreshToken = generateRefreshToken(user.id);
+    // Store refresh token in DB
+    user.refreshToken = refreshToken;
+    await User.save();
+    // Sent token to client 
+    sentTokenToClient('accessToken', accessToken, res);
+    sentTokenToClient('refreshToken', refreshToken, res);
     res.respond(201, "User register successfully", {user: user.name});
 })
 
@@ -24,10 +34,17 @@ export const handleLogin = async (req, res, next)=>{
     const isMatchPassword = await userFound.comparePassword(password);
     if(!isMatchPassword)return next(new ErrorHandler(400, 'Incorrect password'));
     // Generate the Tokens
-
+     const accessToken = generateAccessToken(userFound.id);
+    const refreshToken = generateRefreshToken(userFound.id);
+    // Store refresh token in DB
+    userFound.refreshToken = refreshToken;
+    await userFound.save();
+    // Sent token to client 
+    sentTokenToClient('accessToken', accessToken, res);
+    sentTokenToClient('refreshToken', refreshToken, res);
+    res.respond(200, 'User logged in successfully', {user: userFound.user});
 }
 
 // Handle Logout
 export const handleLogout = (req, res)=>{
-
 }
