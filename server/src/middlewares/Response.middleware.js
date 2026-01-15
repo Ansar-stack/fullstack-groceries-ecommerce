@@ -2,7 +2,7 @@
 export const ResponseMiddleware = (req, res, next)=>{
      res.respond = function(code, message="Success", resources=null){
         const body = {
-            success: code =>200 && code <300,
+            success: code >=200 && code <300,
             message,
         }
         if(resources && typeof resources === "object"){

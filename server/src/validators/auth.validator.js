@@ -5,6 +5,9 @@ export const registerValidations = [
     .notEmpty().withMessage('User name is required')
     .isLength({min: 3}).withMessage('User name should be atleast 3 characters')
     .isLength({max: 50}).withMessage("User name should be less than 50 characters")
+    .matches(/[A-Z]/).withMessage('Password must contain an upercase letter')
+    .matches(/[a-z]/).withMessage("Password must contain a lowercase letter")
+    .matches(/[0-9]/).withMessage("Password must contain a number")
     .toLowerCase(),
     body('email')
     .notEmpty().withMessage('Email is required')
