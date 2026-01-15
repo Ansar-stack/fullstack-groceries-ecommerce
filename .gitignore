@@ -1,0 +1,14 @@
+node_modules/
+client/node_modules/
+server/node_modules/
+client/build/
+server/dist/
+
+#Envoirement Varaibles
+.env
+.env.local
+.env.production
+
+# Logs
+*log
+logs/
