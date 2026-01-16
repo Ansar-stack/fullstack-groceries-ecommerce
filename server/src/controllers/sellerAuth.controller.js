@@ -30,10 +30,10 @@ export const registerSeller = asyncHanlder(async (req, res, next) => {
 export const loginSeller = asyncHanlder(async (req, res, next) => {
   const { email, password } = req.body;
   // Check email in DB
-  const sellerFound = await User.findOne({ email });
+  const sellerFound = await Seller.findOne({ email });
   if (!sellerFound) return next(new ErrorHandler(400, "Email does not exists"));
   // Compare the password
-  const isPasswordMatch = await userFound.comparePassword(password);
+  const isPasswordMatch = await sellerFound.comparePassword(password);
   if (!isPasswordMatch)
     return next(new ErrorHandler(400, "Incorrect password"));
   // Generate Tokens
