@@ -1,11 +1,11 @@
 import { User } from "../models/user.model.js";
 import { asyncHanlder } from "../utils/asyncHandler.util.js"
-import ErrorHandler from "../utils/errorHanlder.util.js";
+import ErrorHandler from "../utils/errorHandler.util.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/genToken.util.js";
 import { sentTokenToClient } from "../utils/sentTokenToClient.util.js";
 
 // Handle register 
-export const handleRegister = asyncHanlder(async (req, res, next)=>{
+export const registerUser = asyncHanlder(async (req, res, next)=>{
     const {name, email, password} = req.body;
     // Check does email exist
     const userFound = await User.findOne({email});
@@ -25,7 +25,7 @@ export const handleRegister = asyncHanlder(async (req, res, next)=>{
 })
 
 // Handle Login
-export const handleLogin = async (req, res, next)=>{
+export const loginUser = async (req, res, next)=>{
     const {email, password} = req.body;
     // Check email in DB
     const userFound = await User.findOne({email});
@@ -46,7 +46,7 @@ export const handleLogin = async (req, res, next)=>{
 }
 
 // Handle Logout
-export const handleLogout = (req, res)=>{
+export const logoutUser = (req, res)=>{
     res.clearCookie("sellerAccToken", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

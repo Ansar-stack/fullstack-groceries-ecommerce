@@ -1,6 +1,6 @@
 import { Seller } from "../models/seller.model.js";
 import {asyncHanlder} from '../utils/asyncHandler.util.js'
-import ErrorHandler from '../utils/errorHanlder.util.js'
+import ErrorHandler from '../utils/errorHandler.util.js'
 import { generateAccessToken, generateRefreshToken } from "../utils/genToken.util.js";
 import { sentTokenToClient } from "../utils/sentTokenToClient.util.js";
 // Register the seller

@@ -1,4 +1,4 @@
-import ErrorHandler from "./errorHanlder.util.js"
+import ErrorHandler from "./errorHandler.util.js"
 // Handle the async functions 
 export const asyncHanlder = (fn)=> async(req, res, next)=>{
     try {
