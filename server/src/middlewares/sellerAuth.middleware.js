@@ -28,7 +28,7 @@ export const sellerAuthMiddleware = async(req, res, next) => {
     const payload = jwt.verify(sellerRefToken, process.env.REFRESH_TOKEN_SECRET);
     if(payload.id !== sellerFound.id)return next(new ErrorHandler(401, 'Invalid refresh token'));
     const newSellerAccessToken = generateRefreshToken(sellerFound.id);
-    sentTokenToClient('sellerAccToken', newSellerAccessToken); // Sent token to client
+    sentTokenToClient('sellerAccToken', newSellerAccessToken, res); // Sent token to client
     req.sellerId = userFound.id;
     next()
   } catch (error) {
