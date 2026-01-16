@@ -1,4 +1,4 @@
-import { Seller } from "../models/seller.model";
+import { Seller } from "../models/seller.model.js";
 import ErrorHandler from "../utils/errorHandler.util.js";
 import jwt from 'jsonwebtoken'
 import { generateRefreshToken } from "../utils/genToken.util.js";
@@ -11,7 +11,7 @@ export const sellerAuthMiddleware = async(req, res, next) => {
   if (sellerAccToken) {
     // Validate the refresh token
     try {
-        const payload = jwt.verify(sellerAccToken, process.env.REFRESH_TOKEN_SECRET);
+        const payload = jwt.verify(sellerAccToken, process.env.ACCESS_TOKEN_SECRET);
         const sellerFound = await Seller.findOne(payload.id);
         if(!sellerFound)return new ErrorHandler(401, "Invalid access token");
         req.sellerId = payload.id;
@@ -22,16 +22,18 @@ export const sellerAuthMiddleware = async(req, res, next) => {
   }
   // Check the refresh token in DB
   const sellerFound = await Seller.findOne({refreshToken: sellerRefToken});
-  if(!sellerFound)return next(new ErrorHandler(401, 'Invalide refresh token'));
+  if(!sellerFound)return next(new ErrorHandler(401, 'Invalid refresh token'));
+ 
   // Validate the seller refresh token 
   try {
     const payload = jwt.verify(sellerRefToken, process.env.REFRESH_TOKEN_SECRET);
     if(payload.id !== sellerFound.id)return next(new ErrorHandler(401, 'Invalid refresh token'));
     const newSellerAccessToken = generateRefreshToken(sellerFound.id);
     sentTokenToClient('sellerAccToken', newSellerAccessToken, res); // Sent token to client
-    req.sellerId = userFound.id;
+    req.sellerId = sellerFound.id;
     next()
   } catch (error) {
+    console.log(error)
     return next(new ErrorHandler(401, 'Invalid or expire refresh token'));
   }
 };

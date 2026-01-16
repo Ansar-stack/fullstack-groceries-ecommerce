@@ -48,6 +48,7 @@ export const loginSeller = asyncHanlder(async (req, res, next) => {
   res.respond(200, 'Seller logged in successfully', {seller: sellerFound.name});
 });
 
+// Logout the seller
 export const logoutSeller = asyncHanlder(async (req, res, next) => {
   res.clearCookie("sellerAccToken", {
     httpOnly: true,
