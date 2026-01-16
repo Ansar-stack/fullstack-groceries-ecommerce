@@ -47,4 +47,15 @@ export const handleLogin = async (req, res, next)=>{
 
 // Handle Logout
 export const handleLogout = (req, res)=>{
+    res.clearCookie("sellerAccToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "Strict",
+    });
+     res.clearCookie("sellerRefToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "Strict",
+    });
+    res.respond(200, 'Logged out successfully')
 }
