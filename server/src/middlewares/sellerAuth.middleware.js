@@ -12,10 +12,10 @@ export const sellerAuthMiddleware = async(req, res, next) => {
     // Validate the refresh token
     try {
         const payload = jwt.verify(sellerAccToken, process.env.ACCESS_TOKEN_SECRET);
-        const sellerFound = await Seller.findOne(payload.id);
+        const sellerFound = await Seller.findOne({_id: payload.id});
         if(!sellerFound)return new ErrorHandler(401, "Invalid access token");
         req.sellerId = payload.id;
-        next();
+        return next();
     } catch (error) {
         // Skip and check the refresh token in DB
     }
@@ -33,7 +33,6 @@ export const sellerAuthMiddleware = async(req, res, next) => {
     req.sellerId = sellerFound.id;
     next()
   } catch (error) {
-    console.log(error)
     return next(new ErrorHandler(401, 'Invalid or expire refresh token'));
   }
 };

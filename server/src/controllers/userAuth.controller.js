@@ -1,11 +1,11 @@
 import { User } from "../models/user.model.js";
-import { asyncHanlder } from "../utils/asyncHandler.util.js"
+import { asyncHandler } from "../utils/asyncHandler.util.js"
 import ErrorHandler from "../utils/errorHandler.util.js";
 import { generateAccessToken, generateRefreshToken } from "../utils/genToken.util.js";
 import { sentTokenToClient } from "../utils/sentTokenToClient.util.js";
 
 // Handle register 
-export const registerUser = asyncHanlder(async (req, res, next)=>{
+export const registerUser = asyncHandler(async (req, res, next)=>{
     const {name, email, password} = req.body;
     // Check does email exist
     const userFound = await User.findOne({email});
@@ -25,7 +25,7 @@ export const registerUser = asyncHanlder(async (req, res, next)=>{
 })
 
 // Handle Login
-export const loginUser = async (req, res, next)=>{
+export const loginUser = asyncHandler(async (req, res, next)=>{
     const {email, password} = req.body;
     // Check email in DB
     const userFound = await User.findOne({email});
@@ -43,7 +43,7 @@ export const loginUser = async (req, res, next)=>{
     sentTokenToClient('accessToken', accessToken, res);
     sentTokenToClient('refreshToken', refreshToken, res);
     res.respond(200, 'User logged in successfully', {user: userFound.user});
-}
+});
 
 // Handle Logout
 export const logoutUser = (req, res)=>{

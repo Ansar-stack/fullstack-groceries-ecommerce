@@ -1,5 +1,5 @@
 import { Seller } from "../models/seller.model.js";
-import { asyncHanlder } from "../utils/asyncHandler.util.js";
+import { asyncHandler } from "../utils/asyncHandler.util.js";
 import ErrorHandler from "../utils/errorHandler.util.js";
 import {
   generateAccessToken,
@@ -7,7 +7,7 @@ import {
 } from "../utils/genToken.util.js";
 import { sentTokenToClient } from "../utils/sentTokenToClient.util.js";
 // Register the seller
-export const registerSeller = asyncHanlder(async (req, res, next) => {
+export const registerSeller = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
   // Check the email if it exists already in DB
   const sellerFound = await Seller.findOne({ email });
@@ -27,7 +27,7 @@ export const registerSeller = asyncHanlder(async (req, res, next) => {
 });
 
 // login the seller
-export const loginSeller = asyncHanlder(async (req, res, next) => {
+export const loginSeller = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   // Check email in DB
   const sellerFound = await Seller.findOne({ email });
@@ -49,7 +49,7 @@ export const loginSeller = asyncHanlder(async (req, res, next) => {
 });
 
 // Logout the seller
-export const logoutSeller = asyncHanlder(async (req, res, next) => {
+export const logoutSeller = asyncHandler(async (req, res, next) => {
   res.clearCookie("sellerAccToken", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

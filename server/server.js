@@ -8,6 +8,7 @@ import { ErrorMiddleware } from './src/middlewares/error.middleware.js';
 // Routes import
 import userAuthRouter from './src/routes/userAuth.route.js';
 import sellerAuthRouter from './src/routes/sellerAuth.route.js';
+import addressRouter from './src/routes/address.route.js';
 
 const app = express();
 
@@ -21,11 +22,14 @@ app.use(ResponseMiddleware);
 // Routes
 app.use('/api/v1/user-auth/', userAuthRouter)
 app.use('/api/v1/seller-auth/', sellerAuthRouter)
+app.use('/api/v1/address/', addressRouter);
+
 // Connect DB
 connectDB();
 
 // Error Middlware
 app.use(ErrorMiddleware);
+
 // Start Listening Server
 app.listen(process.env.PORT, ()=>console.log(`Server listening at port ${process.env.PORT}`));
 
