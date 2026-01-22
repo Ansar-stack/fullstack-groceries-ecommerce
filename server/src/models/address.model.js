@@ -29,7 +29,7 @@ const addressSchema = new mongoose.Schema({
         required: true,
     },
     country: {
-        type: Number, 
+        type: String, 
         required: true
     },
     phone: {
@@ -38,6 +38,6 @@ const addressSchema = new mongoose.Schema({
     }
 }, {timestamps: true});
 
-export const Address = new mongoose.model('Address', addressSchema);
+export const Address = mongoose.model('Address', addressSchema);
 
 

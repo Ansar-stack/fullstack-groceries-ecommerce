@@ -6,7 +6,6 @@ import { userAuthMiddleware } from "../middlewares/userAuth.middleware.js";
 const addressRouter = express.Router();
 addressRouter.post(
   "/add",
-  userAuthMiddleware,
   addressValidations,
   HandleValidationError,
   addAddress,

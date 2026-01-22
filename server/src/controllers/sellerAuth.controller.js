@@ -6,6 +6,7 @@ import {
   generateRefreshToken,
 } from "../utils/genToken.util.js";
 import { sentTokenToClient } from "../utils/sentTokenToClient.util.js";
+
 // Register the seller
 export const registerSeller = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;

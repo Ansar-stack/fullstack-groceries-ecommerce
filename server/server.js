@@ -5,6 +5,8 @@ import {} from 'dotenv/config'
 import { connectDB } from './src/configs/db.config.js';
 import { ResponseMiddleware } from './src/middlewares/response.middleware.js';
 import { ErrorMiddleware } from './src/middlewares/error.middleware.js';
+import { userAuthMiddleware } from './src/middlewares/userAuth.middleware.js';
+
 // Routes import
 import userAuthRouter from './src/routes/userAuth.route.js';
 import sellerAuthRouter from './src/routes/sellerAuth.route.js';
@@ -22,7 +24,7 @@ app.use(ResponseMiddleware);
 // Routes
 app.use('/api/v1/user-auth/', userAuthRouter)
 app.use('/api/v1/seller-auth/', sellerAuthRouter)
-app.use('/api/v1/address/', addressRouter);
+app.use('/api/v1/address/', userAuthMiddleware, addressRouter);
 
 // Connect DB
 connectDB();
