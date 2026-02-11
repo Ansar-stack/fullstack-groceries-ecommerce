@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -9,34 +9,36 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      index: true,
+      unique: true,
     },
     password: {
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default: "user",
+      enum: ["user", "seller", "admin"],
+    },
+    isDeleted: {
+        type: Boolean, 
+        default: false
+    },
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordTokenExpire: {
+      type: Date,
+    },
+    emailVerificationCode: Number,
+    emailVerfiicationCOdeExpire: Date,
     refreshToken: String,
-    resetPasswordToken: String,
-    resetPasswordExpire: String,
-    isEmailVarified: { type: Boolean, default: false },
-    varificationCode: Number,
-    varificationCodeExpire: Date,
+    isSellerVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
-
-// Hash password before saving
-userSchema.pre("save", async function () {
-  const user = this;
-  if (!user.isModified("password")) return;
-  // Hash the password
-  const hashPassword = await bcrypt.hash(user.password, 10);
-  user.password = hashPassword;
-});
-
-// Compare password method
-userSchema.methods.comparePassword = async function (candidatePassword) {
-  return await bcrypt.compare(candidatePassword, this.password);
-};
 
 export const User = mongoose.model("User", userSchema);

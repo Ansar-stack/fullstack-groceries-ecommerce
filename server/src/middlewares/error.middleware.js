@@ -1,9 +1,9 @@
-export const ErrorMiddleware = (err, req, res, next)=>{
-    let statusCode= err.statusCode || 500;
-    let message = err.message || "Internal Server Error";
-    console.log(err.stack);
-    return res.status(statusCode).json({
-        success: false, 
+
+export const ErrorMiddleware = (err, req, res)=>{
+    const status = err.statusCode || err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(status).json({
+        success:false, 
         message
     })
 }

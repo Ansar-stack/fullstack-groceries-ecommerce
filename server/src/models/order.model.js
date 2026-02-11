@@ -1,14 +1,58 @@
-import mongoose from 'mongoose'
-const orderSchema = new mongoose.Schema({
-    userId: {type: String, required: true, ref: 'User'},
-    items: [{product: {type: mongoose.Types.ObjectId, required: true, ref: 'Product'}}],
-    quantity: {type: Number, required: true},
-    amount: {type: Number, required: true},
-    address: {type: String, required: true, ref: 'Address'},
-    status: {type: String, default: "Order Placed"},
-    paymentType: {type: String, required: true},
-    isPaid: {type: Boolean, required: false},
-}, {timestamps: true});
+import mongoose from "mongoose";
 
-const Order = mongoose.model.Order || mongoose.model('Order', orderSchema);
-export default Order;
+export const orderSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    items: {
+      type: [
+        {
+          name: {
+            type: String,
+            ref: "Product",
+            required: true,
+          },
+          category: {
+            type: mongoose.Types.ObjectId,
+            ref: "ProductCategory",
+          },
+        },
+      ],
+      required: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    address: {
+      type: mongoose.Types.ObjectId,
+      ref: "Address",
+    },
+    status: {
+      type: String,
+      enum: ["pending", "done", "cancelled"],
+    },
+    paymentType: {
+      type: String,
+      default: "COD",
+    },
+    isPaid: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true },
+);
+
+export const Order = mongoose.model('Order', orderSchema);

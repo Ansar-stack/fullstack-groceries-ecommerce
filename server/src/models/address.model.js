@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 const addressSchema = new mongoose.Schema({
-    userId: {
+    user: {
         type: mongoose.Types.ObjectId,
-        ref: "User"
+        ref: "User",
+        required: true
     },
     firstName: {
         type: String, 
@@ -12,32 +13,34 @@ const addressSchema = new mongoose.Schema({
     lastName: {
         type: String
     }, 
-    email:{
+    email: {
         type: String, 
         required: true
     },
     street: {
         type: String, 
-        required: true, 
-    }, 
+        required: true
+    },
     city: {
         type: String, 
         required: true
-    },
+    }, 
     zipCode: {
-        type: Number, 
-        required: true,
-    },
+        type: String,
+        required: true
+    }, 
     country: {
         type: String, 
         required: true
+    }, 
+    isDeleted: {
+        type: Boolean, 
+        default: false
     },
     phone: {
-        type: Number, 
+        type: String, 
         required: true
     }
 }, {timestamps: true});
 
-export const Address = mongoose.model('Address', addressSchema);
-
-
+export const Address = mongoose.model("Address", addressSchema);

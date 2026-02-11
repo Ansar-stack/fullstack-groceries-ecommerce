@@ -1,9 +1,9 @@
-import ErrorHandler from "./errorHandler.util.js"
-// Handle the async functions 
-export const asyncHandler = (fn)=> async(req, res, next)=>{
+import AppError from "./AppError.util.js";
+
+export const asyncHandler = (fn)=> async (req, res, next)=>{
     try {
-        await fn(req, res, next)
+        await fn(req, res, next);
     } catch (error) {
-        return next(new ErrorHandler(error.code, error.message))
+        return next(new AppError(error.status || 500, error.message || "Internal Server Error"));
     }
 }
