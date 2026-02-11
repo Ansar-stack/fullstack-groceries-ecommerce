@@ -32,7 +32,7 @@ const productSchema = new mongoose.Schema({
     },
     inStock: {
         type: Boolean,
-        default: false
+        default: true
     },
     isDeleted: {
         type: Boolean, 

@@ -1,12 +1,12 @@
 
 // Error Handler
+
 class AppError extends Error {
-    constructor(statusCode, message = "Something Went Wrong"){
+  constructor(statusCode, message = "Some thing went wrong") {
         super(message);
         this.success = false;
         this.statusCode = statusCode;
         Error.captureStackTrace(this, this.constructor);
     }
 }
-
-export default AppError
+export default AppError;
