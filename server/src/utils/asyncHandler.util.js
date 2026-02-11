@@ -1,5 +1,5 @@
 import AppError from "./AppError.util.js";
-
+// Async handler
 export const asyncHandler = (fn)=> async (req, res, next)=>{
     try {
         await fn(req, res, next);

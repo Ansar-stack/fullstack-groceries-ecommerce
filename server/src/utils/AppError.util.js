@@ -1,4 +1,5 @@
 
+// Error Handler
 class AppError extends Error {
     constructor(statusCode, message = "Something Went Wrong"){
         super(message);
