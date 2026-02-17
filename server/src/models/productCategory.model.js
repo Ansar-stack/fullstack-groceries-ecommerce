@@ -5,4 +5,9 @@ const productCategorySchema  = new mongoose.Schema({
         type: String, 
         required: true
     },
-}, {timestamps: true})
+    description: {
+        type: String
+    }
+}, {timestamps: true});
+
+export const ProductCetagory = mongoose.model('ProductCategory', productCategorySchema)

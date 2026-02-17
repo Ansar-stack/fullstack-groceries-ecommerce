@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 import {} from 'dotenv/config'
 import { ConnectDB } from './src/configs/db.configs/db.config.js';
 import { ResponseMiddleware } from './src/middlewares/response.middleware.js';
-import { ErrorMiddlware } from './src/middlewares/error.middleware.js';
+import {ErrorMiddleware} from './src/middlewares/error.middleware.js';
 import router from './src/routes/routes.js';
 
 
@@ -26,7 +26,7 @@ app.use((req, res)=>res.respond(404, "Route Not Found"));
 // Connect DB
 ConnectDB();
 // Error Middlware
-app.use(ErrorMiddlware);
+app.use(ErrorMiddleware);
 
 // Start Listening Server
 app.listen(process.env.PORT, ()=>console.log(`Server listening at port ${process.env.PORT}`));

@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: string, 
+        type: String, 
         required:true
     }, 
     price: {
@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema({
         type: Number, 
         required: true
     },
-    image: {
+    images: {
         type: Array,   // Base64 of image because cloudinary is not available in our country
         required: true
     },
